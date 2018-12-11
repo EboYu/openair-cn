@@ -168,6 +168,13 @@ int emm_proc_tracking_area_update_request (
 
   OAILOG_DEBUG(LOG_NAS_EMM, "EMM-PROC-  Tracking Area Update request for new UeId " MME_UE_S1AP_ID_FMT ". TAU_Type=%d, active_flag=%d)\n", ue_id,
       ies->eps_update_type.eps_update_type_value, ies->eps_update_type.active_flag);
+  
+
+  // new_emm_ue_context->emm_cause = EMM_CAUSE_PLMN_NOT_ALLOWED;
+  // OAILOG_INFO(LOG_NAS_EMM, "EMM-PROC  - Reject TAU EMM with emm cause: %d",new_emm_ue_context->emm_cause);
+  // rc = _emm_tracking_area_update_reject(new_emm_ue_context->ue_id, new_emm_ue_context->emm_cause);
+      
+
   /*
    * Try to retrieve the correct EMM context.
    */

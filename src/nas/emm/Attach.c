@@ -235,6 +235,25 @@ int emm_proc_attach_request (
      OAILOG_INFO (LOG_NAS_EMM, "EMM-PROC  ATTACH - For ueId " MME_UE_S1AP_ID_FMT " no UE context exists. \n", ue_id);
      OAILOG_FUNC_RETURN (LOG_NAS_EMM, RETURNerror);
    }
+   //Reject the attach with an emm cause #11, 12, 13, 14, 15
+
+    //REQUIREMENT_3GPP_24_301(R10_5_5_1__1);
+    //set an emm cause defined in 3gpp_24.301.h
+   // EMM_CAUSE_PLMN_NOT_ALLOWED
+   // EMM_CAUSE_TA_NOT_ALLOWED
+    // EMM_CAUSE_NOT_AUTHORIZED_IN_PLMN
+    // EMM_CAUSE_TA_NOT_ALLOWED 
+    // EMM_CAUSE_ROAMING_NOT_ALLOWED 
+    // EMM_CAUSE_EPS_NOT_ALLOWED_IN_PLMN 
+    // EMM_CAUSE_NO_SUITABLE_CELLS 
+    temp_emm_ue_ctx.emm_cause = EMM_CAUSE_ROAMING_NOT_ALLOWED;//;EMM_CAUSE_PLMN_NOT_ALLOWED
+    OAILOG_WARNING(LOG_NAS_EMM, "EMM-PROC Reject the ATTACH request of ueId " MME_UE_S1AP_ID_FMT " ue with the cause : %d", ue_id, temp_emm_ue_ctx.emm_cause);
+    struct nas_emm_attach_proc_s   no_attach_proc = {0};
+    no_attach_proc.ue_id       = ue_id;
+    no_attach_proc.emm_cause   = temp_emm_ue_ctx.emm_cause;
+    no_attach_proc.esm_msg_out = NULL;
+    rc = _emm_attach_reject (&temp_emm_ue_ctx, (struct nas_base_proc_s *)&no_attach_proc);
+    OAILOG_FUNC_RETURN (LOG_NAS_EMM, rc);
 
 //   DevAssert(ue_context);
 

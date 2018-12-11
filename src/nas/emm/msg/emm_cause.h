@@ -50,5 +50,4 @@ Description Defines error cause code returned upon receiving unknown,
  */
 #define EMM_CAUSE_SUCCESS     (-1)
 
-
 #endif /* FILE_EMM_CAUSE_H_SEEN*/
